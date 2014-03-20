@@ -21,7 +21,7 @@ namespace PerfMatters.Flush
         {
             var controller = filterContext.Controller;
             var hydrators = DependencyResolver.Current.GetServices<IHydrator>();
-            controller.FlushHead((hydrators ?? new IHydrator[0]).ToArray());
+            controller.FlushHead((hydrators ?? Enumerable.Empty<IHydrator>()).ToArray());
         }
     }
 }
