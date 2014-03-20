@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using PerfMatters.Flush.Hydrators;
 
 namespace PerfMatters.Flush
 {
@@ -10,28 +11,24 @@ namespace PerfMatters.Flush
             controller.ControllerContext.HttpContext.Response.Flush();
         }
 
-        public static void FlushHead(this ControllerBase controller)
-        {
-            FlushHead(controller, null, null);
-        }
-
         public static void FlushHead(this ControllerBase controller, string title)
         {
-            FlushHead(controller, title, null);
+            FlushHead(controller, new TitleHydrator(title));
         }
 
         public static void FlushHead(this ControllerBase controller, object model)
         {
-            FlushHead(controller, null, model);
+            FlushHead(controller, new ModelHydrator(model));
         }
 
-        public static void FlushHead(this ControllerBase controller, string title, object model)
+        public static void FlushHead(this ControllerBase controller, params IHydrator[] hydrators)
         {
-            if (title != null)
-                controller.ViewBag.Title = title;
-
-            if (model != null)
-                controller.ViewData.Model = model;
+            if (hydrators != null) {
+                foreach (var hydrator in hydrators) {
+                    if (hydrator == null) continue;
+                    hydrator.Hydrate(controller);
+                }
+            }
 
             var partialViewResult = new PartialViewResult
             {
