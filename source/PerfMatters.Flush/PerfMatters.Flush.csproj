@@ -71,6 +71,7 @@
     <Compile Include="ContollerBaseExtension.cs" />
     <Compile Include="FlushHeadAttribute.cs" />
     <Compile Include="HtmlHelperExtension.cs" />
+    <Compile Include="Hydrators\IHydrator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
