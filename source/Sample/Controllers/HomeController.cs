@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Net.Http.Headers;
 using System.Threading;
-using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using CourtesyFlush;
 
@@ -36,49 +33,10 @@ namespace Sample.Controllers
             return Content("Yey");
         }
 
-
-        [HttpGet, FlushHead(Title = "I am flushed", FlushAntiForgeryToken = true)]
+        [FlushHead(Title = "I am flushed", FlushAntiForgeryToken = true)]
         public ActionResult Contact()
         {
             return View();
         }
-
-
-/*
-        [HttpGet]
-        public ActionResult Contact()
-        {
-            string cookieToken;
-            string formToken;
-
-            AntiForgery.GetTokens(null, out cookieToken, out formToken);
-
-            if (AntiForgeryConfig.RequireSsl && !Request.IsSecureConnection)
-            {
-                throw new InvalidOperationException("WebPageResources.AntiForgeryWorker_RequireSSL"); //TODO: Find string message
-            }
-
-            Response.Cookies.Set(new HttpCookie(AntiForgeryConfig.CookieName, cookieToken){HttpOnly = true});
-
-            if (!AntiForgeryConfig.SuppressXFrameOptionsHeader)
-            {
-                // Adding X-Frame-Options header to prevent ClickJacking. See
-                // http://tools.ietf.org/html/draft-ietf-websec-x-frame-options-10
-                // for more information.
-                Response.AddHeader("X-Frame-Options", "SAMEORIGIN");
-            }
-
-
-            var retVal = new TagBuilder("input");
-            retVal.Attributes["type"] = "hidden";
-            retVal.Attributes["name"] = "__RequestVerificationToken";
-            retVal.Attributes["value"] = formToken; //TODO: Move to HTML Helper method
-
-            ViewBag.Message = "Your contact page.";
-            ViewBag.Tag = retVal.ToString();
-
-            return View();
-        }
-*/
     }
 }

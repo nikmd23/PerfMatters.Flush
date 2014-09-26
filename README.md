@@ -49,7 +49,5 @@ A full writeup of [how to use `CourtesyFlush` is availble on my blog](http://nik
   }
   ```
 
-  *NOTE: `AntiForgeryToken` support only available in .NET 4.5* 
-
 ### 1.0
 - Re-branded from PerfMatters.Flush to CourtesyFlush 
