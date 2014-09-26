@@ -14,18 +14,10 @@ namespace System.Web.WebPages
             return new MvcHtmlString(string.Empty);
         }
 
-#if NET45
         public static MvcHtmlString FlushedAntiForgeryToken(this HtmlHelper html)
         {
             var token = html.ViewContext.HttpContext.Items[ControllerBaseExtension.FlushedAntiForgeryTokenKey] as string;
-
-            var tag = new TagBuilder("input");
-            tag.Attributes["type"] = "hidden";
-            tag.Attributes["name"] = "__RequestVerificationToken";
-            tag.Attributes["value"] = token;
-
-            return new MvcHtmlString(tag.ToString());
+            return new MvcHtmlString(token);
         }
-#endif
     }
 }
